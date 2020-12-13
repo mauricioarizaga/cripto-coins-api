@@ -31,7 +31,7 @@ npm start
 
 Por defecto, el Backend corre en http://localhost:3001
 <br><br>
-La documentación de los endpoints esta en el archivo [Endpoint](endpoints.md)
+La documentación de los endpoints esta en el archivo [Endpoints](endpoints.md)
 
 # Hecho con mucho :heart:, alma y estas herramientas 
 
