@@ -1,0 +1,35 @@
+{
+  "name": "apiwolox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "cross-env NODE_PATH=./src nodemon -L",
+    "forever": "cross-env NODE_PATH=./src forever index.js",
+    "test": "cross-env NODE_PATH=./src mocha -w ./tests/**/*.spec.js",
+    "build:symlinked": "cross-env NODE_PATH=./src nodemon -L"
+  },
+  "author": "Mauro",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "node-gyp": "^7.1.2",
+    "pg": "^8.2.1",
+    "pg-native": "^3.0.0",
+    "sequelize": "^5.21.13"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "supertest-session": "^4.0.0"
+  }
+}
