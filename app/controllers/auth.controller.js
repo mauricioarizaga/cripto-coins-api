@@ -1,7 +1,7 @@
-const db = require("../models");
 const config = require("../config/auth.config");
+const db = require("../models");
 const Users = db.user;
-const CurrencyList = db.favCurrencyUser;
+const CurrencyList = db.prefCurrencyUserList;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -29,14 +29,11 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.signin = (req, res) => {
-
-  const {
-        email,
-        password
-    } = req.body;
-//busca el user
-   Users.findOne({
+exports.signin =  async (req, res) => {
+  const { email , password} = req.body;
+ 
+//busca el usuario
+await Users.findOne({
     where: {
       email: email
     }

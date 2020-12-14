@@ -10,47 +10,50 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/test/all", controller.allAccess);
+// Todos los usuarios
+app.get("/test/all", controller.allAccess);
 
-  app.get(
+// Test User logueado
+app.get(
     "/test/user",
     [authJwt.verifyToken],
     controller.userBoard
   );
 
-//Listado coins por moneda preferida  
+ ////////        API             ////////////////////////////////////  
+
+// Listado coins por moneda preferida  
 app.get(
   "/list/coins",
- //[authJwt.verifyToken], 
+ [authJwt.verifyToken], 
   controller.coinList
 );
 
-
-//Agregar monedas a  favs
+// Agregar monedas a  favs
 app.post(
   "/user/add/coins",
- // [authJwt.verifyToken], 
+ [authJwt.verifyToken], 
   controller.addFavCoins
 );
 
-//Listado monedas favoritas 
+// Listado monedas favoritas 
 app.get(
   "/user/favlist/coins",
- // [authJwt.verifyToken], 
+ [authJwt.verifyToken], 
   controller.listFavCoins
 );
 
-//Borrar monedas de la lista de fav 
+// Borrar monedas de la lista de fav 
 app.delete(
   "/user/favdelete/coins",
- // [authJwt.verifyToken], 
+  [authJwt.verifyToken], 
   controller.delFavCoins
 );
 
-//Update valores de precio y última actualización 
+// Update valores de precio y última actualización 
 app.put(
   "/user/favupdate/coins",
- // [authJwt.verifyToken], 
+  [authJwt.verifyToken], 
   controller.updateFavCoins
 );
 

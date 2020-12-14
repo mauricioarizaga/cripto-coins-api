@@ -10,6 +10,8 @@ module.exports = function(app) {
     next();
   });
   
+
+// Registro Usuarios
   app.post("/auth/signup",
     [
       verifySignUp.checkDuplicateEmail
@@ -17,5 +19,6 @@ module.exports = function(app) {
     controller.signup
   );
 
+// Login Usuarios
   app.post("/auth/signin", controller.signin);
 };

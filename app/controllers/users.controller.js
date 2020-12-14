@@ -59,6 +59,51 @@ exports.allAccess = (req, res) => {
     }
   };
 
+
+  //Actualizar precios y fecha última actualización 
+  exports.updateFavCoins= async (req, res) => {
+  const {idUser, id , preferedCurrencyisoName } = req.body;
+  const dataUpdated = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency="+preferedCurrencyisoName+"&ids="+id)
+  
+  FavUserCoins.update({
+    favCoinValue: dataUpdated.data[0].current_price,
+    favCoinLastUpdate: dataUpdated.data[0].last_updated
+  }, {
+    where: {
+      favIdUser: idUser,
+      favCoinId: id
+    },
+  }).then((response) => {
+    
+      if(response==1){
+      return res.json({mensaje: "El precio de la moneda y su última fecha de cambio se ha actualizado correctamente"})
+    }else{
+      return res.json({messagge:"Error!!. El precio de la moneda y su última fecha de cambio NO se ha actualizado." });      
+    }    }).catch(err =>{
+      res.status(500).res.json({mensaje:err});
+     });
+  };
+
+//Eliminar monedas desde listado 
+  exports.delFavCoins= async (req, res) => {
+  const {idUser, id } = req.body;
+   await FavUserCoins.destroy({
+     where:{
+      favIdUser: idUser,
+      favCoinId: id
+    },
+    }).then((response) => {
+
+      if(response==0){
+      return res.json({messagge:"Error!!. La moneda no ha sido borrada o no existe en el listado" });
+      } else {
+      return res.json({messagge:"La moneda ha sido borrada de tu lista." });
+      }
+    }).catch(err =>{
+      res.status(500).res.json({mensaje:err});
+     });
+};
+
 //Listar monedas favoritas de un usuario 
 exports.listFavCoins= async (req, res) => {
   let sortMarketPrice=[];
@@ -128,6 +173,9 @@ switch(orderName){
 }
 
 //Mostramos y controlamos num para mostrar el listado de fav coins
+if(sortMarketPrice.length==0){
+  return res.status(200).json({message: "Este usuario no ha agregado monedas a su lista"}) 
+}
 if(num<= 0 || typeof num !== "number"){
   return res.status(200).json(sortMarketPrice.slice(0,25)) 
 }
@@ -144,47 +192,4 @@ return res.status(200).json(sortMarketPrice.slice(0,25));
 }).catch(err =>{
   res.status(500).res.json({mensaje:err});
 })
-};
-
-//Eliminar monedas desde listado 
-exports.delFavCoins= async (req, res) => {
-  const {idUser, id } = req.body;
-   await FavUserCoins.destroy({
-     where:{
-      favIdUser: idUser,
-      favCoinId: id
-    },
-    }).then((response) => {
-      if(response==0){
-      return res.json({messagge:"Error!!. La moneda no ha sido borrada o no existe en el listado" });
-      } else {
-      return res.json({messagge:"La moneda ha sido borrada de tu lista." });
-      }
-    }).catch(err =>{
-      res.status(500).res.json({mensaje:err});
-     });
-};
-
-//Actualizar precios y fecha última actualización 
-exports.updateFavCoins= async (req, res) => {
-  const {idUser, id , preferedCurrencyisoName } = req.body;
-  const dataUpdated = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency="+preferedCurrencyisoName+"&ids="+id)
-  
- 
-  FavUserCoins.update({
-    favCoinValue: dataUpdated.data[0].current_price,
-    favCoinLastUpdate: dataUpdated.data[0].last_updated
-  }, {
-    where: {
-      favIdUser: idUser,
-      favCoinId: id
-    },
-  }).then((response) => {
-      if(response==1){
-      return res.json({mensaje: "El precio de la moneda y su última fecha de cambio se ha actualizado correctamente"})
-    }else{
-      return res.json({messagge:"Error!!. El precio de la moneda y su última fecha de cambio NO se ha actualizado." });      
-    }    }).catch(err =>{
-      res.status(500).res.json({mensaje:err});
-     });
 };

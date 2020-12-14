@@ -25,7 +25,7 @@ db.sequelize = sequelize;
 
 db.user = require("./Users.js")(sequelize, Sequelize);
 db.prefCurrencyUserList = require("./PrefCurrencyUserList.js")(sequelize, Sequelize);
-db.favoritesCoinsUsers = require("./FavoritesCoinsUsers")(sequelize, Sequelize);
+db.favoritesCoinsUsers = require("./FavoritesCoinsUsers.js")(sequelize, Sequelize);
 
 //Acá van las relaciones
 
