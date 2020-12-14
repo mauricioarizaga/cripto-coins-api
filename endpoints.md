@@ -1,6 +1,6 @@
 # Documentación Rutas Cripto - Coins 
 
-#### Registro de usuarios /auth/signup
+#### - Registro de usuarios /auth/signup
 * firstName: Requerido del tipo string.
 * lastName: Requerido del tipo string.
 * password: Requerido del tipo string. Además tiene que ser alfanúmerico con un mínimo de 8 caracteres. Se guarda encriptado en el campo.
